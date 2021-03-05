@@ -37,7 +37,7 @@ script:
 
 jobs:
   include:
-  # tests
+  tests
   - rust: stable
   - rust: stable
     os: osx
@@ -53,6 +53,7 @@ jobs:
     script:
     - cargo build $CARGO_ARGS
     - cargo test $CARGO_ARGS # for coverage
+    - echo $TEST_ARGS
     - >
       pytest --swindon-bin=$(pwd)/target/debug/swindon \
         --swindon-config=$(pwd)/tests/config.yaml.tpl \
