@@ -184,8 +184,10 @@ def swindon_ports(unused_port, debug_routing, swindon_bin):
 def swindon_bin(request):
     bins = (request.config.getoption('--swindon-bin') or
             ['target/debug/swindon'])
+    print('bins', bins)
     for item in bins:
         p = ROOT / item
+        print('path', p)
         assert p.exists(), p
         return p
 

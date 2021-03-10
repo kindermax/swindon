@@ -59,7 +59,6 @@ jobs:
         --swindon-config=$(pwd)/tests/config.yaml.tpl \
         --swindon-replication-config=$(pwd)/tests/config-w-replication.yaml.tpl \
         -rsxX  $TEST_ARGS
-    # --kcov=$HOME/.local/bin/kcov
     - bash <(curl -s https://codecov.io/bash)
 
   - env:
