@@ -1,14 +1,12 @@
 language: rust
 rust: stable
 os: linux
-dist: bionic
+dist: focal
 sudo: false
 addons:
   apt:
-    # sources:
-    # - sourceline: 'ppa:fkrull/deadsnakes'
     packages:
-    # - python3.7
+    # - python3.8
     - libcurl4-openssl-dev
     - libelf-dev
     - libdw-dev
@@ -44,11 +42,10 @@ jobs:
   - rust: beta
   - rust: nightly
   - env:
-    - FUNC_TEST=y
     - AIOHTTP_NO_EXTENSIONS=1
     install:
     # - source .travis/coverage.sh && build_kcov
-    - curl https://bootstrap.pypa.io/get-pip.py -o - | python3.6 - --user
+    - curl https://bootstrap.pypa.io/get-pip.py -o - | python3.8 - --user
     - pip3 install -r tests/requirements.txt --user
     script:
     - cargo build $CARGO_ARGS

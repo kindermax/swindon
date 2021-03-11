@@ -144,11 +144,11 @@ containers:
 
   pytest:
     setup:
-    - !Ubuntu cosmic
+    - !Ubuntu focal
     # - !AptTrust
     #   keys: [4AB0F789CBA31744CC7DA76A8CF63AD3F06FC659]
     # - !UbuntuPPA jonathonf/python-3.6
-    - !Install [libcurl4, libdw1, python3.7, python3.7-dev, ca-certificates]
+    - !Install [libcurl4, libdw1, python3.8, python3.8-dev, ca-certificates]
     - !BuildDeps
       - wget
       - make
@@ -163,6 +163,7 @@ containers:
       - binutils-dev
       - python3
       - python3-distutils
+      - libssl-dev
     - !TarInstall
       url: https://github.com/SimonKagstrom/kcov/archive/master.tar.gz
       script: |
@@ -174,7 +175,7 @@ containers:
     - !PipConfig
       dependencies: true
       install-python: false
-      python-exe: /usr/bin/python3.7
+      python-exe: /usr/bin/python3.8
     - !Py3Requirements "tests/requirements.txt"
 
 commands:
