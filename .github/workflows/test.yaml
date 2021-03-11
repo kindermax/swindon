@@ -66,7 +66,7 @@ jobs:
           --swindon-bin=$(pwd)/target/debug/swindon \
           --swindon-config=$(pwd)/tests/config.yaml.tpl \
           --swindon-replication-config=$(pwd)/tests/config-w-replication.yaml.tpl \
-          -rsxvvX --full-trace
+          -rsxvvX -k "base_redir"
 
   # lints:
   #   name: Lints
