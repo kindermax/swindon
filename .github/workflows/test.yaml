@@ -1,0 +1,56 @@
+on:
+  push:
+    branches:
+    - master
+    tags-ignore:
+    - v*
+  pull_request:
+    branches:
+    - master
+    types:
+    - assigned
+    - opened
+    - synchronize
+    - reopened
+
+name: Build, lint and test
+
+jobs:
+  test:
+    name: Test Suite
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions-rs/toolchain@v1
+      with:
+        profile: minimal
+        toolchain: stable
+        override: true
+
+    # - name: Run cargo test
+    #   uses: actions-rs/cargo@v1
+    #   with:
+    #     command: test
+    - uses: actions/setup-python@v2
+      with:
+        python-version: "3.6"
+
+    - name: Install python deps
+      run: pip3 install -r tests/requirements.txt --user
+
+    - name: Build swindon
+      run: cargo build
+
+    - name: Add hosts to /etc/hosts
+      run: |
+        sudo echo "127.0.0.1 example.com www.example.com" | sudo tee -a /etc/hosts
+
+    - name: Run integration tests
+      env:
+        AIOHTTP_NO_EXTENSIONS: 1
+      run: |
+        timeout -s SIGKILL 30m python3 -m pytest \
+          --swindon-bin=$(pwd)/target/debug/swindon \
+          --swindon-config=$(pwd)/tests/config.yaml.tpl \
+          --swindon-replication-config=$(pwd)/tests/config-w-replication.yaml.tpl \
+          -rsxvvX
